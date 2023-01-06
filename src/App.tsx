@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "./Components/Card";
+import Loading from "./Components/Loading";
+import Refresh from "./Refresh";
 
 type Tour = {
   id: string;
@@ -12,9 +14,11 @@ type Tour = {
 function App() {
   const url = "https://course-api.com/react-tours-project";
 
+  /* States */
   const [tours, setTours] = useState<Tour[]>([]);
   const [isLoading, setLoading] = useState<boolean>();
 
+  /* Fetching Function */
   const fetching = async () => {
     setLoading(true);
     const response = await fetch(url);
@@ -23,6 +27,7 @@ function App() {
     setLoading(false);
   };
 
+  /* Function For Not Interested(Removing Tour) */
   const deleteTour = (id: string) => {
     const newTours = tours.filter((tour) => {
       return id !== tour.id;
@@ -30,42 +35,35 @@ function App() {
     setTours(newTours);
   };
 
+  /*  */
   useEffect(() => {
     fetching();
   }, []);
 
+  /* Condintion for Loading... */
   if (isLoading) {
-    return (
-      <main className="loading">
-        <h1>Loading...</h1>
-      </main>
-    );
+    return <Loading />;
   }
 
+  /* Condintion for Refresh */
   if (tours.length === 0) {
-    return (
-      <main className="loading">
-        <h3>No Tours</h3>
-        <button className="btn" onClick={fetching}>
-          Refresh
-        </button>
-      </main>
-    );
-  } else {
-    return (
-      <main>
-        <div className="title">
-          <h2>Tours</h2>
-          <div className="underline"></div>
-        </div>
-        <section>
-          {tours.map((tour, i) => {
-            return <Card key={i} tour={tour} deleteTour={deleteTour} />;
-          })}
-        </section>
-      </main>
-    );
+    return <Refresh fetching={fetching} />;
   }
+
+  /* The UI of the tours to be shown as */
+  return (
+    <main>
+      <div className="title">
+        <h2>Tours</h2>
+        <div className="underline"></div>
+      </div>
+      <section>
+        {tours.map((tour, i) => {
+          return <Card key={i} tour={tour} deleteTour={deleteTour} />;
+        })}
+      </section>
+    </main>
+  );
 }
 
 export default App;
