@@ -1,9 +1,18 @@
 import React, { useState, useEffect } from "react";
+import Card from "./Components/Card";
+
+type Tour = {
+  id: string;
+  image: string;
+  info: string;
+  name: string;
+  price: string;
+};
 
 function App() {
   const url = "https://course-api.com/react-tours-project";
 
-  const [tours, setTours] = useState<object[]>([]);
+  const [tours, setTours] = useState<Tour[]>([]);
 
   const fetching = async () => {
     const response = await fetch(url);
@@ -29,6 +38,11 @@ function App() {
           <h2>Tours</h2>
           <div className="underline"></div>
         </div>
+        <section>
+          {tours.map((tour, i) => {
+            return <Card key={i} tour={tour} />;
+          })}
+        </section>
       </main>
     );
   }
