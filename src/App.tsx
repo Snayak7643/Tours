@@ -16,7 +16,22 @@ function App() {
     fetching();
   }, []);
 
-  return <h1>Tours</h1>;
+  if (tours.length === 0) {
+    return (
+      <main>
+        <h1 className="loading">Loading...</h1>
+      </main>
+    );
+  } else {
+    return (
+      <main>
+        <div className="title">
+          <h2>Tours</h2>
+          <div className="underline"></div>
+        </div>
+      </main>
+    );
+  }
 }
 
 export default App;
