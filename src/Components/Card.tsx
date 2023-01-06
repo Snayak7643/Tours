@@ -1,13 +1,8 @@
 import React from "react";
+import { Tour } from "./Type";
 
 type PropType = {
-  tour: {
-    id: string;
-    image: string;
-    info: string;
-    name: string;
-    price: string;
-  };
+  tour: Tour;
   deleteTour: (id: string) => void;
 };
 

@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Components/Card";
 import Loading from "./Components/Loading";
 import Refresh from "./Refresh";
-
-type Tour = {
-  id: string;
-  image: string;
-  info: string;
-  name: string;
-  price: string;
-};
+import { Tour } from "./Components/Type";
 
 function App() {
   const url = "https://course-api.com/react-tours-project";
@@ -17,9 +10,10 @@ function App() {
   /* States */
   const [tours, setTours] = useState<Tour[]>([]);
   const [isLoading, setLoading] = useState<boolean>();
+  const [error, setError] = useState<boolean>(false);
 
   /* Fetching Function */
-  const fetching = async () => {
+  const fetchingTours = async () => {
     setLoading(true);
     const response = await fetch(url);
     const res = await response.json();
@@ -37,8 +31,17 @@ function App() {
 
   /*  */
   useEffect(() => {
-    fetching();
+    try {
+      fetchingTours();
+    } catch (err) {
+      setError(true);
+    }
   }, []);
+
+  /* Condition for error */
+  if (error) {
+    return <h1 className="loading">Error</h1>;
+  }
 
   /* Condintion for Loading... */
   if (isLoading) {
@@ -47,7 +50,7 @@ function App() {
 
   /* Condintion for Refresh */
   if (tours.length === 0) {
-    return <Refresh fetching={fetching} />;
+    return <Refresh fetchingTours={fetchingTours} />;
   }
 
   /* The UI of the tours to be shown as */
