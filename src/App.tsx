@@ -34,8 +34,11 @@ function App() {
 
   if (tours.length === 0) {
     return (
-      <main>
-        <h1 className="loading">Loading...</h1>
+      <main className="loading">
+        <h3>No Tours</h3>
+        <button className="btn" onClick={fetching}>
+          Refresh
+        </button>
       </main>
     );
   } else {
