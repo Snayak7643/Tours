@@ -8,9 +8,10 @@ type PropType = {
     name: string;
     price: string;
   };
+  deleteTour: (id: string) => void;
 };
 
-const Card: React.FunctionComponent<PropType> = ({ tour }) => {
+const Card: React.FunctionComponent<PropType> = ({ tour, deleteTour }) => {
   return (
     <article className="single-tour">
       <img src={tour.image} alt="tour" />
@@ -20,8 +21,15 @@ const Card: React.FunctionComponent<PropType> = ({ tour }) => {
           <h4 className="tour-price">{tour.price}</h4>
         </div>
         <p className="tour-info">{tour.info}</p>
+        <button
+          className="delete-btn"
+          onClick={() => {
+            deleteTour(tour.id);
+          }}
+        >
+          Not Interested
+        </button>
       </footer>
-      <button>Not Interested</button>
     </article>
   );
 };

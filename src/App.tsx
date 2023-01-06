@@ -21,6 +21,13 @@ function App() {
     console.log(res);
   };
 
+  const deleteTour = (id: string) => {
+    const newTours = tours.filter((tour) => {
+      return id !== tour.id;
+    });
+    setTours(newTours);
+  };
+
   useEffect(() => {
     fetching();
   }, []);
@@ -40,7 +47,7 @@ function App() {
         </div>
         <section>
           {tours.map((tour, i) => {
-            return <Card key={i} tour={tour} />;
+            return <Card key={i} tour={tour} deleteTour={deleteTour} />;
           })}
         </section>
       </main>

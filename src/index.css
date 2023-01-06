@@ -123,14 +123,15 @@ p {
 
 /* section */
 .section {
-  width: 90vw;
+  display: flex;
+  flex-direction: row;
+  width: 35%;
   margin: 0 auto;
-  max-width: var(--max-width);
 }
 
 @media screen and (min-width: 992px) {
   .section {
-    width: 95vw;
+    width: 30%;
   }
 }
 .btn {
@@ -174,7 +175,7 @@ main {
 .single-tour {
   background: var(--clr-white);
   border-radius: var(--radius);
-  margin: 2rem 0;
+  margin: 2rem 2rem;
   box-shadow: var(--light-shadow);
   transition: var(--transition);
 }
