@@ -13,12 +13,14 @@ function App() {
   const url = "https://course-api.com/react-tours-project";
 
   const [tours, setTours] = useState<Tour[]>([]);
+  const [isLoading, setLoading] = useState<boolean>();
 
   const fetching = async () => {
+    setLoading(true);
     const response = await fetch(url);
     const res = await response.json();
     setTours(res);
-    console.log(res);
+    setLoading(false);
   };
 
   const deleteTour = (id: string) => {
@@ -31,6 +33,14 @@ function App() {
   useEffect(() => {
     fetching();
   }, []);
+
+  if (isLoading) {
+    return (
+      <main className="loading">
+        <h1>Loading...</h1>
+      </main>
+    );
+  }
 
   if (tours.length === 0) {
     return (
